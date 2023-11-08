@@ -39,7 +39,6 @@ client.subCommandGroups = new Collection();
 client.buttons = new Collection();
 client.distube = new DisTube(client, {
     emitNewSongOnly: true,
-    emitAddSongWhenCreatingQueue: false,
     searchSongs: 5,
     leaveOnStop: true,
     plugins: [

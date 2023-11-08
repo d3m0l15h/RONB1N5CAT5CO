@@ -12,14 +12,14 @@ module.exports = {
   
       const { user, guild } = member;
   
-      const Welcomer = new WebhookClient({ url: 'https://discord.com/api/webhooks/994911946610585650/aM0a1kPZSo9Yk89lWu3fhL_-UNOjThaO4XqZUDOvBzbp5kn19GEHmbCtfOToBoWmzjbZ' });
+      const Welcomer = new WebhookClient({ url: 'https://discord.com/api/webhooks/1124079441501487154/Rj_uLBNtoA8BVxKZoGVgm0gSylS-kH0mtbd8XBUc5sYyl-6Lh04ARshNSY7VBDxtY3At' });
   
       const Welcome = new EmbedBuilder()
         .setColor("DarkGreen")
-        .setAuthor({name: user.tag, iconURL: user.avatarURL({ dynamic: true, size: 512 })})
+        .setAuthor({name: user.username, iconURL: user.avatarURL({ dynamic: true, size: 512 })})
         .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
         .setDescription(`
-          Welcome ${member} to **${guild.name}**!\n
+          Welcome ${user} to **${guild.name}**!\n
           Account Created: <t:${parseInt(user.createdTimestamp / 1000)}:R>\nLatest Member Count: **${guild.memberCount}**`)
         .setImage('attachment://welcome.png')
         .setFooter({text: `ID: ${user.id}`})

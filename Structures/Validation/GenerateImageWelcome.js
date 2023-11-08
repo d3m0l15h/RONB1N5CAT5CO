@@ -1,6 +1,7 @@
 const Canvas = require('canvas');
 const { AttachmentBuilder } = require('discord.js');
 const background = 'https://i.imgur.com/Ubo3Vbq.jpg';
+const path = require('path');
 Canvas.registerFont('upheavtt.ttf', {family: 'Unpheaval'});
 
 const dim = {
@@ -16,8 +17,7 @@ const av = {
 }
 
 const generateImageWelcome = async (member) => {
-    let username = member.user.username;
-    let discrim = member.user.discriminator;
+    let username = member.displayName;
     let avatarURL = member.user.displayAvatarURL({extension: 'png', size: av.size});
 
     const canvas = Canvas.createCanvas(dim.width, dim.height);
@@ -50,7 +50,7 @@ const generateImageWelcome = async (member) => {
     ctx.fillText('Welcome', dim.width / 2, dim.margin + 70);
 
     ctx.font = '60px Unpheaval';
-    ctx.fillText(username + '#' + discrim, dim.width / 2, dim.height - dim.margin - 125);
+    ctx.fillText(username, dim.width / 2, dim.height - dim.margin - 125);
 
     ctx.font = '40px Unpheaval';
     ctx.fillText('to the server', dim.width / 2, dim.height - dim.margin - 50);

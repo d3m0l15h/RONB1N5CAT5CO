@@ -17,7 +17,7 @@ async function paginationEmbed(
   interaction,
   pages,
   buttonList,
-  timeout = 120000
+  timeout = 10000
 ) {
   if (!interaction && !interaction.channel) throw new Error("Channel is inaccessible.");
   if (!pages) throw new Error("Pages are not given.");
@@ -69,12 +69,12 @@ async function paginationEmbed(
     collector.resetTimer();
   });
 
-  collector.on("end", () => {
+  collector.on("end", async (collected) => {
     const disabledRow = new ActionRowBuilder().addComponents(
       buttonList[0].setDisabled(true),
       buttonList[1].setDisabled(true)
     );
-    interaction.editReply({
+    await interaction.editReply({
       embeds: [pages[page].setFooter({ text: `Page ${page + 1} / ${pages.length}` })],
       components: [disabledRow],
     });

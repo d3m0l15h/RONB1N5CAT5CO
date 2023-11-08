@@ -16,8 +16,7 @@ const av = {
 }
 
 const generateImageLeaving = async (member) => {
-    let username = member.user.username;
-    let discrim = member.user.discriminator;
+    let username = member.displayName;
     let avatarURL = member.user.displayAvatarURL({extension: 'png', size: av.size});
 
     const canvas = Canvas.createCanvas(dim.width, dim.height);
@@ -49,7 +48,7 @@ const generateImageLeaving = async (member) => {
     ctx.fillText('Goodbye', dim.width / 2, dim.margin + 110);
 
     ctx.font = '60px Unpheaval';
-    ctx.fillText(username + '#' + discrim, dim.width / 2, dim.height - dim.margin - 60);
+    ctx.fillText(username, dim.width / 2, dim.height - dim.margin - 60);
 
     const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'leaving.png' });
 

@@ -1,50 +1,37 @@
-const { EmbedBuilder } = require('discord.js')
-const client = require('../../index')
-const SpotifyAPI = require('../../Structures/Functions/SpotifyAPI');
-
+const { EmbedBuilder } = require('discord.js');
+const client = require('../../index');
+const YTMusic = require("ytmusic-api").default
 
 const status = queue =>
   `Volume: \`${queue.volume}%\` | Filter: \`${queue.filters.names.join(', ') || 'Off'}\` | Loop: \`${queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off'
-  }\` | Autoplay: \`${queue.autoplay ? 'On' : 'Off'}\``
+  }\` | Autoplay: \`${queue.autoplay ? 'On' : 'Off'}\``;
 
 client.distube
   .on('playSong', async (queue, song) => {
-    const spotify = new SpotifyAPI(song.name);
-    await spotify.getTrack();
-    const name = String(song.name).includes( String(spotify.getName())) ? spotify.getName() : song.name;
-    
-    const artist = String(song.uploader.name).includes(String(spotify.getArtist())) ? spotify.getArtist() : song.uploader.name;
-    
     queue.textChannel.send({
       embeds: [new EmbedBuilder()
         .setColor("Green")
         .setTitle(`PLAY`)
         .setDescription(
-          `🎵 | **${name}**
-          \n **By**: ${artist}
-          \n${status(queue)}`)
+          `🎵 | **${song.name}**
+              \n${status(queue)}`)
       ]
     })
+
   }
   )
   .on('addSong', async (queue, song) => {
-    const spotify = new SpotifyAPI(song.name);
-    await spotify.getTrack();
-
-    const name = String(song.name).includes(String(spotify.getName())) ? spotify.getName() : song.name;
-    
-    const artist = String(song.uploader.name).includes(String(spotify.getArtist())) ? spotify.getArtist() : song.uploader.name;
-    
     queue.textChannel.send({
       embeds: [new EmbedBuilder()
         .setColor("Green")
         .setTitle(`ADD`)
         .setDescription(
-          `🎶 | **${name}**
-          \n **By**: ${artist}`)
+          `🎶 | **${song.name}**
+              \n **By**: ${song.owner}`)
         .setFooter({ text: `Requested by ${song.user.tag}`, iconURL: song.user.displayAvatarURL() })
       ]
     })
+
   }
   )
   .on('addList', (queue, playlist) =>
@@ -82,3 +69,7 @@ client.distube
     ]
   })
   )
+
+module.exports = {
+  name: 'distube'
+}
